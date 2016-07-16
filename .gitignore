@@ -1,0 +1,12 @@
+# Do not leak cache
+__cache/*
+
+# Do not include 7zip
+7z.*
+
+# Don't include pycache
+__pycache__
+*/__pycache__
+*/*/__pycache__
+*/*/*/__pycache__
+*/*/*/*/__pycache__
