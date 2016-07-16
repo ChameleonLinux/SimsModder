@@ -4,9 +4,16 @@ __cache/*
 # Do not include 7zip
 7z.*
 
+# Do not include samples or unwanted fog files
+*.fog
+samples
+
 # Don't include pycache
 __pycache__
 */__pycache__
 */*/__pycache__
 */*/*/__pycache__
 */*/*/*/__pycache__
+
+# Do not include any release
+*_release.7z
