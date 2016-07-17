@@ -6,6 +6,8 @@ def read(fname):
   try:
     for l in f.readlines():
       l = l.strip()
+      if l[0] == "#":
+        continue
       if l[0] == "@":
         l = l[1:].split(" ", 1)
         super[l[0].strip()] = l[1].strip()

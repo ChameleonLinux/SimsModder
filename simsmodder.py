@@ -1,4 +1,5 @@
 import Fog.Parser, sys, os, time
+from __globals__ import *
 from Basilisk import Logger
 
 def __insmod__(path, r):
@@ -19,11 +20,12 @@ class SimsModderConfigScope:
   Temp = "out"
   Pause = 1
   Scope = {'Directories':{}}
+  Hooks = {'Pre':[],'Post':[]}
 SM = SimsModderConfigScope()
 
 __insmod__("config.py", "config")
   
-Logger.info("Sims Modder\t1.0")
+Logger.info("Sims Modder\t" + SIMSMODDER_VERSION_STR)
 Logger.warn("Compatible with The Sims 2. Some listings may require additional expansion packs.")
 Logger.info("Using user-agent: " + SM.Scope['UserAgent'])
 time.sleep(1)
@@ -59,9 +61,17 @@ for fog in Fogs:
   index = index+1
 Logger.success("All fog files use valid downloaders.")
 
+Logger.info("Running pre-hooks...")
+for hook in SM.Hooks['Pre']:
+  hook(SM.Scope)
+  
 Logger.info("Running downloaders...")
 for entry in Fogs:
   handler = SM.Handlers[entry['super']['upstream']]
   for d in entry['data']:
     handler.get(d)
     time.sleep(SM.Pause)
+
+Logger.info("Running post-hooks...")
+for hook in SM.Hooks['Post']:
+  hook(SM.Scope)

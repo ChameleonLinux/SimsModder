@@ -1,27 +1,31 @@
+import win32com.client # required for win32 users
 import Downloaders.MTS, Downloaders.URL
-import Installer.Sims2Pack, Installer.Inteen
+import Installer.Sims2Pack, Installer.Inteen, Installer.Sims3Pack
 SM.Temp = "out" # usually not used
 SM.Handlers["ModTheSims"] = Downloaders.MTS.Downloader
 SM.Handlers["url"] = Downloaders.URL.Downloader
 SM.Fogs = ["samples/inteen.fog", "samples/wideloading.fog"]
-Documents = "point_this_to_your_documents_ts2_folder"
+GameDocs = {"Sims2UltimateCollection":"EA Games\\The Sims™ 2 Ultimate Collection",
+            "Sims3": "Electronic Arts\\The Sims 3"}
+Documents = win32com.client.Dispatch("WScript.Shell").SpecialFolders("MyDocuments") + GameDocs['Sims2UltimateCollection']
 SM.Scope['Directories'] = {
                             "Downloads": Documents+"Downloads",
                             "Cameras": Documents+"Cameras",
                             "LatestEPResUI": "C:\\Program Files (x86)\\Origin Games\\The Sims 2 Ultimate Collection\\Apartment Life\\TSData\\Res\\UI",
                             "Cache": "__cache",
                             "PetBreeds": Documents+"PetBreeds",
+                            "ModsPackages": Documents+"Mods\\Packages\\",
+                            "ModsOverrides": Documents+"Mods\\Packages\\",
                             "ALOverrides": "C:\\Program Files (x86)\\Origin Games\\The Sims 2 Ultimate Collection\\Apartment Life\\TSData\\Res\\Overrides"
 			}
-SM.Scope['FileTypes'] = {'Txt': '*.txt',
-                        'Package': '*.package',
-                        'Sims2Pack': '*.Sims2Pack',
-                        'InTeenPackage': "*.package"}
+SM.Scope['FileTypes'] = {
+                         'Txt': '*.txt',
+                         'Package': '*.package',
+                         'Sims2Pack': '*.Sims2Pack',
+                         'Sims3Pack': '*.Sims3Pack',
+                         'InTeenPackage': "*.package"
+                        }
 SM.Scope['Hooks'] = {
-                     'Sims2Pack':
-                      {
-                        "Extracted": Installer.Sims2Pack.Notice
-                      },
                      'InTeenPackage':
                       {
                         "Extracted": Installer.Inteen._

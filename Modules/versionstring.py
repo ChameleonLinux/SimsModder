@@ -1,2 +1,2 @@
-global SM
-SM.Scope['UserAgent'] = SM.Scope['UserAgent'] + " SimsModder/1.0"
+global SM, SIMSMODDER_VERSION_STR
+SM.Scope['UserAgent'] = SM.Scope['UserAgent'] + " SimsModder/" + SIMSMODDER_VERSION_STR
